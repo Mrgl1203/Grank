@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ARouterMoudle.iml" filepath="$PROJECT_DIR$/ARouterMoudle.iml" />
+      <module fileurl="file://D:\fromGit\ARouterMoudle\moudle_app\app.iml" filepath="D:\fromGit\ARouterMoudle\moudle_app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_common/lib_common.iml" filepath="$PROJECT_DIR$/lib_common/lib_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moudle_app/moudle_app.iml" filepath="$PROJECT_DIR$/moudle_app/moudle_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moudle_girls/moudle_girls.iml" filepath="$PROJECT_DIR$/moudle_girls/moudle_girls.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moudle_main/moudle_main.iml" filepath="$PROJECT_DIR$/moudle_main/moudle_main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moudle_news/moudle_news.iml" filepath="$PROJECT_DIR$/moudle_news/moudle_news.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">干货福利</string>
+    <string name="page_num">%1d/%2d</string>
+
+</resources>
