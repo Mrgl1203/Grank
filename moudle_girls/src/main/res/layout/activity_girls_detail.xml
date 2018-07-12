@@ -6,34 +6,46 @@
     android:layout_height="match_parent"
     tools:context="com.gulei.moudle_girls.activity.GirlsDetailActivity">
 
-    <com.gulei.common.view.photoview.PhotoView
-        android:id="@+id/PhotoView"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+
+        <TextView
+            android:id="@+id/tvPageNum"
+            style="@style/txt_shadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/page_num"
+            android:textColor="@color/cWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="25dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:src="@mipmap/icon_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.gulei.common.view.photoview.PhotoView
+        android:id="@+id/transView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cBlack">
+        android:layout_gravity="center" />
 
-    </android.support.v4.view.ViewPager>
-
-    <TextView
-        android:id="@+id/tvPageNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/page_num"
-        android:textColor="@color/cWhite"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@mipmap/icon_following"
-        android:scaleType="fitXY"
-        />
 </android.support.constraint.ConstraintLayout>

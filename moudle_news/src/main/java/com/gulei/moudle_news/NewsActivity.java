@@ -15,15 +15,18 @@ public class NewsActivity extends BaseActivity {
     ImageView iv;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.news_newsactivity);
+    protected int getLayoutId() {
+        return R.layout.news_newsactivity;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
         iv = findViewById(R.id.iv);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(NewsActivity.this,iv,"iv").toBundle());
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(NewsActivity.this, iv, "iv").toBundle());
             }
         });
     }

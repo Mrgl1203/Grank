@@ -1,5 +1,7 @@
 package com.gulei.common.utils;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.widget.Toast;
 
 import com.gulei.common.base.BaseApplication;
@@ -10,22 +12,34 @@ import com.gulei.common.base.BaseApplication;
 
 public class ToastUtil {
     private static Toast toast;
+    private static Context context = BaseApplication.getContext();
+
+    static {
+        checkNotNull("", Toast.LENGTH_LONG);
+    }
+
+    @SuppressLint("ShowToast")
+    private static void checkNotNull(String msg, int duration) {
+        if (toast == null) {
+            toast = Toast.makeText(context, msg, duration);
+        }
+    }
 
     public static void showToast(String msg, int duration) {
-        if (toast == null) {
-            toast = Toast.makeText(BaseApplication.getContext(), msg, duration);
-        }
         toast.setDuration(duration);
         toast.setText(msg);
         toast.show();
     }
 
-    public static void showToast(int res, int duration) {
-        if (toast == null) {
-            toast = Toast.makeText(BaseApplication.getContext(), res, duration);
-        }
-        toast.setDuration(duration);
-        toast.setText(res);
+    public static void showLongToast(String msg) {
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setText(msg);
+        toast.show();
+    }
+
+    public static void showShortToast(String msg) {
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setText(msg);
         toast.show();
     }
 

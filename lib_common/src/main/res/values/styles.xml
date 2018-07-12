@@ -14,5 +14,29 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!--透明背景主题-->
+    <style name="TransparentActivity" parent="Theme.AppCompat">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <style name="ToolBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!--字体阴影-->
+    <style name="txt_shadow">
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">3</item>
+        <item name="android:shadowColor">@color/cBlack</item>
+    </style>
+
+    <style name="dialogNoBg" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

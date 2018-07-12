@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -22,15 +23,20 @@ import com.gulei.common.view.photoview.Info;
 import com.gulei.common.view.photoview.PhotoView;
 import com.gulei.moudle_girls.R;
 import com.gulei.moudle_girls.adapter.GirlsAdapter;
+import com.gulei.moudle_girls.bean.EventType;
 import com.gulei.moudle_girls.bean.GirlsBean;
 import com.gulei.moudle_girls.constant.IntentString;
 import com.gulei.moudle_girls.constant.RequestCode;
-import com.gulei.moudle_girls.constant.ResultCode;
 import com.gulei.moudle_girls.present.GirlsPresent;
 import com.gulei.moudle_girls.view.GirlsConstants;
+import com.gyf.barlibrary.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +51,21 @@ public class GirlsActivity extends BaseActivity implements GirlsConstants.GirlsV
     private Toolbar mToolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.girls_girlsactivity);
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar = ImmersionBar.with(this)
+                .titleBar(mToolbar)
+                .statusBarColor(R.color.colorPrimary);
+        mImmersionBar.init();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.girls_girlsactivity;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
         present = new GirlsPresent(this);
 
         mToolbar = findViewById(R.id.ToolBar);
@@ -81,15 +99,15 @@ public class GirlsActivity extends BaseActivity implements GirlsConstants.GirlsV
         listAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @SuppressLint("RestrictedApi")
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                List<GirlsBean.ResultsBean> resultsBean = listAdapter.getData();
-                PhotoView iv = (PhotoView) adapter.getViewByPosition(position, R.id.ivImage);
-                Info info = iv.getInfo();
-                iv.animaFrom(info);
+            public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
+                final List<GirlsBean.ResultsBean> resultsBean = listAdapter.getData();
+                ImageView iv = (ImageView) adapter.getViewByPosition(position, R.id.ivImage);
+                final Info info = PhotoView.getImageViewInfo(iv);
                 Intent intent = new Intent(GirlsActivity.this, GirlsDetailActivity.class);
                 intent.putExtra(IntentString.GIRLS_CURRENTPAGE, position + 1);
                 intent.putParcelableArrayListExtra(IntentString.GIRLS_DETAIL, (ArrayList<? extends Parcelable>) resultsBean);
                 intent.putExtra(IntentString.IMAGE_INFO, info);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, RequestCode.GirlDetail);
             }
         });
@@ -126,12 +144,19 @@ public class GirlsActivity extends BaseActivity implements GirlsConstants.GirlsV
         listAdapter.loadMoreFail();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCode.GirlDetail && resultCode == ResultCode.GirlDetail) {
-            int currentPage = data.getIntExtra(IntentString.GIRLS_CURRENTPAGE, 0);
-            recyclerView.scrollToPosition(currentPage - 1);
-        }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void pageSelected(EventType.PageSelected pageSelected) {
+        int position = pageSelected.position;
+        recyclerView.scrollToPosition(position);
     }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getBackInfo(EventType.BackInfo info) {
+        ImageView imageView = (ImageView) listAdapter.getViewByPosition(info.currentPosition, R.id.ivImage);
+        Info backInfo = PhotoView.getImageViewInfo(imageView);
+        EventBus.getDefault().post(new EventType.GetInfo(backInfo));
+    }
+
 }

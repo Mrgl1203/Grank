@@ -3,6 +3,7 @@ package com.gulei.common.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.gulei.common.utils.Utils;
 import com.gulei.lib_common.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -19,6 +20,7 @@ import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
 public class BaseApplication extends Application {
     private static BaseApplication sInstance;
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
@@ -38,10 +40,12 @@ public class BaseApplication extends Application {
             }
         });
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        Utils.init(this);
     }
 
     public static BaseApplication getContext() {

@@ -11,7 +11,6 @@ import com.gulei.common.utils.GlideApp;
 import com.gulei.common.view.photoview.PhotoView;
 import com.gulei.moudle_girls.R;
 import com.gulei.moudle_girls.bean.GirlsBean;
-import com.gulei.moudle_girls.constant.PlaceHolderImg;
 
 import java.util.List;
 
@@ -47,7 +46,10 @@ public class GirlsDetailAdapter extends PagerAdapter {
     public ViewGroup getPrimaryItem() {
         return mCurrentView;
     }
-    public PhotoView getCurrentPhotoView(){return currentPhotoView;}
+
+    public PhotoView getCurrentPhotoView() {
+        return currentPhotoView;
+    }
 
     @Override
     public int getCount() {
@@ -64,11 +66,9 @@ public class GirlsDetailAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.girls_detail_item, container, false);
         PhotoView photoView = view.findViewById(R.id.PhotoView);
+        photoView.enable();
         GlideApp.with(context)
                 .load(girls.get(position).getUrl())
-                .thumbnail(0.2f)
-                .placeholder(PlaceHolderImg.getDefaultImg())
-                .error(PlaceHolderImg.getDefaultImg())
                 .into(photoView);
         container.addView(view);
         return view;

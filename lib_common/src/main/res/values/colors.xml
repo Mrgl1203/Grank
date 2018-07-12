@@ -5,4 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="cWhite">#ffffffff</color>
     <color name="cBlack">#ff000000</color>
+    <color name="cGray">#8c8989</color>
+    <color name="cYellow">#dfd21e</color>
+    <color name="cOrange">#dc800f</color>
+    <color name="cGreen">#73d709</color>
+    <color name="cRed">#e90909</color>
+    <color name="cPink">#d255a8</color>
+    <color name="cPurple">#ce0d8d</color>
 </resources>

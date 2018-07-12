@@ -38,5 +38,18 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cBlack"
+        android:visibility="gone">
+
+        <com.gulei.common.view.photoview.PhotoView
+            android:id="@+id/transView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

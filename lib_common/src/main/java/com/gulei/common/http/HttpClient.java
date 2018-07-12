@@ -5,7 +5,9 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.gulei.common.base.BaseApplication;
+import com.gulei.common.utils.Logger;
 import com.gulei.common.utils.UrlUtil;
+import com.gulei.common.utils.progressmanager.ProgressManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,14 +34,18 @@ public class HttpClient {
 
     private HttpClient() {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(BaseApplication.getContext()));
-        okHttpClient = new OkHttpClient.Builder()
+//        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(Utils.getContext(), R.raw.cer, STORE_PASS, STORE_ALIAS);
+        OkHttpClient.Builder OkHttpBuilder = new OkHttpClient.Builder()
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 .writeTimeout(10000L, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true)
                 .cookieJar(cookieJar)
-                .addInterceptor(new HttpLoggingInterceptor())
-                .build();
+                .addInterceptor(getHttpLoggingInterceptor());
+//                .sslSocketFactory(sslParams.sSLSocketFactory,sslParams.trustManager)
+//                .hostnameVerifier(HttpsUtils.getHostnameVerifier())
+
+        okHttpClient = ProgressManager.getInstance().with(OkHttpBuilder).build();//传入builder实现进度拦截器添加
 
         builder = new Retrofit.Builder()
                 .client(okHttpClient)
@@ -56,6 +62,21 @@ public class HttpClient {
             }
         }
         return sInstance;
+    }
+
+    public HttpLoggingInterceptor getHttpLoggingInterceptor() {
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Logger.d(message);
+            }
+        });
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return httpLoggingInterceptor;
+    }
+
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
     }
 
 

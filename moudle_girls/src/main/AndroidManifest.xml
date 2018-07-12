@@ -4,7 +4,10 @@
 
     <application android:theme="@style/AllAppTheme">
         <activity android:name=".activity.GirlsActivity" />
-        <activity android:name=".activity.GirlsDetailActivity"></activity>
+
+        <activity
+            android:name=".activity.GirlsDetailActivity"
+            android:theme="@style/TransparentActivity" />
     </application>
 
 </manifest>

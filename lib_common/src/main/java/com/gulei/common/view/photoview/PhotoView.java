@@ -19,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.OverScroller;
 import android.widget.Scroller;
 
+import com.gulei.common.utils.Logger;
+
+import java.util.Arrays;
+
 
 /**
  * Created by liuheng on 2015/6/21.
@@ -117,6 +121,7 @@ public class PhotoView extends ImageView {
         mDetector = new GestureDetector(getContext(), mGestureListener);
         mScaleDetector = new ScaleGestureDetector(getContext(), mScaleListener);
         float density = getResources().getDisplayMetrics().density;
+//        Logger.e("density="+density);//4.0
         MAX_OVER_SCROLL = (int) (density * 30);
         MAX_FLING_OVER_SCROLL = (int) (density * 30);
         MAX_OVER_RESISTANCE = (int) (density * 140);
@@ -772,7 +777,7 @@ public class PhotoView extends ImageView {
         @Override
         public void run() {
             if (mClickListener != null) {
-                mClickListener.onClick( PhotoView.this);
+                mClickListener.onClick(PhotoView.this);
             }
         }
     };
@@ -1226,17 +1231,20 @@ public class PhotoView extends ImageView {
 
         RectF imgRect = new RectF(0, 0, width, height);
         matrix.mapRect(imgRect);
-
+//        Logger.e("mapRect:" + imgRect.left + "     " + imgRect.top + "   " + imgRect.right + "   " + imgRect.bottom);
         RectF rect = new RectF(p[0] + imgRect.left, p[1] + imgRect.top, p[0] + imgRect.right, p[1] + imgRect.bottom);
         RectF widgetRect = new RectF(0, 0, imgView.getWidth(), imgView.getHeight());
         RectF baseRect = new RectF(widgetRect);
         PointF screenCenter = new PointF(widgetRect.width() / 2, widgetRect.height() / 2);
-
+//        Logger.e("rect:"+rect.toString());
+//        Logger.e("widgetRect:"+widgetRect.toString());
+//        Logger.e("baseRect:"+baseRect.toString());
+//        Logger.e("screenCenter:"+ screenCenter.x+"           "+screenCenter.y);
         return new Info(rect, imgRect, widgetRect, baseRect, screenCenter, 1, 0, imgView.getScaleType());
     }
 
     private static void getLocation(View target, int[] position) {
-
+        //这里的位置取的是相对于contentView的位置
         position[0] += target.getLeft();
         position[1] += target.getTop();
 
@@ -1244,7 +1252,13 @@ public class PhotoView extends ImageView {
         while (viewParent instanceof View) {
             final View view = (View) viewParent;
 
-            if (view.getId() == android.R.id.content) return;
+            if (view.getId() == android.R.id.content) {
+//                Logger.e("图片左边距：" + position[0] + "            图片上边距：" + position[1]);
+//                int[] location = new int[2];
+//                target.getLocationOnScreen(location);
+//                Logger.e("getLocationOnScreen：" + location[0] + "            图片上边距：" + location[1]);
+                return;
+            }
 
             position[0] -= view.getScrollX();
             position[1] -= view.getScrollY();
@@ -1257,6 +1271,7 @@ public class PhotoView extends ImageView {
 
         position[0] = (int) (position[0] + 0.5f);
         position[1] = (int) (position[1] + 0.5f);
+        Logger.e("图片左边距：" + position[0] + "            图片上边距：" + position[1]);
     }
 
     private void reset() {
@@ -1302,7 +1317,7 @@ public class PhotoView extends ImageView {
             reset();
 
             Info mine = getInfo();
-
+//            Logger.e("执行动画的photoINfo："+mine.toString());
             float scaleX = info.mImgRect.width() / mine.mImgRect.width();
             float scaleY = info.mImgRect.height() / mine.mImgRect.height();
             float scale = scaleX < scaleY ? scaleX : scaleY;
@@ -1406,7 +1421,7 @@ public class PhotoView extends ImageView {
     public void rotate(float degrees) {
         mDegrees += degrees;
         int centerX = (int) (mWidgetRect.left + mWidgetRect.width() / 2);
-        int centerY = (int) (mWidgetRect.top + mWidgetRect.height() /2);
+        int centerY = (int) (mWidgetRect.top + mWidgetRect.height() / 2);
 
         mAnimaMatrix.postRotate(degrees, centerX, centerY);
         executeTranslate();

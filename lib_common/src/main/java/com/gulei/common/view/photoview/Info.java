@@ -6,6 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
+import com.gulei.common.utils.GsonUtil;
+
 /**
  * Created by liuheng on 2015/8/19.
  */
@@ -80,4 +82,9 @@ public class Info implements Parcelable{
             return new Info[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return GsonUtil.toJsonString(this);
+    }
 }

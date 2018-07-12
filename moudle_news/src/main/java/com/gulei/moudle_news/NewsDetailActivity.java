@@ -7,8 +7,12 @@ import com.gulei.common.base.BaseActivity;
 public class NewsDetailActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_detail);
+    protected int getLayoutId() {
+        return R.layout.activity_news_detail;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
+
     }
 }

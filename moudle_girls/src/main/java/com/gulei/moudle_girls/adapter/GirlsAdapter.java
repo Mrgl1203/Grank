@@ -1,9 +1,10 @@
 package com.gulei.moudle_girls.adapter;
 
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gulei.common.utils.GlideApp;
-import com.gulei.common.view.photoview.PhotoView;
 import com.gulei.moudle_girls.R;
 import com.gulei.moudle_girls.bean.GirlsBean;
 import com.gulei.moudle_girls.constant.PlaceHolderImg;
@@ -20,7 +21,7 @@ public class GirlsAdapter extends BaseQuickAdapter<GirlsBean.ResultsBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, GirlsBean.ResultsBean item) {
-        PhotoView imageView = helper.getView(R.id.ivImage);
+        ImageView imageView = helper.getView(R.id.ivImage);
         GlideApp.with(imageView.getContext())
                 .load(item.getUrl())
                 .placeholder(PlaceHolderImg.getDefaultImg())

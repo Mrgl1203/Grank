@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextProgress">
+        <attr name="progress_unreach_color" format="color" />
+        <attr name="progress_unreach_height" format="dimension" />
+        <attr name="progress_reach_color" format="color" />
+        <attr name="progress_reach_height" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_offset" format="dimension" />
+        <attr name="maxProgress" format="integer" />
+        <attr name="style_circle" format="boolean" />
+        <attr name="circle_radius" format="dimension" />
+        <attr name="show_text_progress" format="boolean" />
+    </declare-styleable>
+</resources>
